@@ -52,9 +52,6 @@ class Satellite:
         # while self.ek
 
 
-#TODO misiing parameter eccentricity
-
-
 ###########################################################################################
 MU = 3.986004115e14
 OMEGA_E = 7.2921151467e-5
@@ -77,7 +74,6 @@ for i in sat_index:
                           almanac_data.iat[i + 10, 1], almanac_data.iat[i + 11, 1], almanac_data.iat[i + 12, 1],
                           almanac_data.iat[i + 13, 1]))
 
-# print(len(sats))
-print(sats[26].e)
+print(sats[0].e)
 # print(sats[26].calculate_position(12534657))
 
