@@ -1,6 +1,7 @@
 import pandas as pd
 import functions
 from classes import Satellite
+from visualization import viewer
 
 pd.set_option('display.max_rows', None)
 
@@ -22,4 +23,30 @@ for i in sat_index:
 
 week, tow = functions.date2gpstime([2022, 10, 11, 12, 0, 0])
 
-sat_position = sats[0].calculate_position(tow, week)
+# task 1 - calculate xyz coordinates for all satellites in one epoch
+sat_positions = []
+for sat in sats:
+    sat_positions.append(sat.calculate_position(tow, week))
+
+
+# task 2 - calculate for the whole day for each sat (interval 15 min)
+sats_daily_positions = []
+
+week2, tow2 = functions.date2gpstime([2022, 10, 11, 0, 0, 0])
+
+interval = []
+
+for i in range(0, 24 * 60 * 60, 15 * 60):
+    interval.append(i)
+
+for i in interval:
+    tow2 += i
+    for sat in sats:
+        sats_daily_positions.append(sat.calculate_position(tow2, week2))
+
+daily_df = pd.DataFrame(sats_daily_positions, columns=['sat_id', 'tow', 'X', 'Y', 'Z'])
+daily_df.sort_values(by=['tow'])
+daily_df.plot()
+print(daily_df)
+
+viewer(daily_df)

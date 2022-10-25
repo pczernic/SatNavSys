@@ -47,8 +47,9 @@ class Satellite:
     def calculate_position(self, tow, week):
         self.tow = tow
         self.week = week
+        self.tow += self.week * 7 * 86400
         # step 1
-        self.tk = (self.tow + self.week * 7 * 86400) - (self.time_of_applicability + self.gps_week * 7 * 86400)
+        self.tk = self.tow - (self.time_of_applicability + self.gps_week * 7 * 86400)
         # print(f'tk = {self.tk}')
 
         # step 2
@@ -101,7 +102,7 @@ class Satellite:
         self.x = self.xk * np.cos(self.omega_k) - self.yk * np.cos(self.orbital_inclination) * np.sin(self.omega_k)
         self.y = self.xk * np.sin(self.omega_k) + self.yk * np.cos(self.orbital_inclination) * np.cos(self.omega_k)
         self.z = self.yk * np.sin(self.orbital_inclination)
-        print(f'====================\n'
-              f'Position of Satelite {self.id}:\nXk = {self.x}\nYk = {self.y}\nZk = {self.z}\n'
-              f'====================')
-        return [self.x, self.y, self.z]
+        # print(f'====================\n'
+        #       f'Position of Satelite {self.id}:\nXk = {self.x}\nYk = {self.y}\nZk = {self.z}\n'
+        #       f'====================')
+        return [self.id, self.tow, self.x, self.y, self.z]
