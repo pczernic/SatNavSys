@@ -22,4 +22,4 @@ for i in sat_index:
 
 week, tow = functions.date2gpstime([2022, 10, 11, 12, 0, 0])
 
-print(sats[0].calculate_position(tow, week))
+sat_position = sats[0].calculate_position(tow, week)
